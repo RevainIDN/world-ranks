@@ -1,0 +1,9 @@
+#root {
+  max-width: auto;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+body {
+  background: top / contain no-repeat url(/hero-image-wr.jpg);
+}

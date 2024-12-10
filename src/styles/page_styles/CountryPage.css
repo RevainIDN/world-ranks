@@ -1,0 +1,48 @@
+.country-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	max-width: 880px;
+	margin: 0 auto;
+	padding: 30px 0;
+	color: #D2D5DA;
+	background-color: #1B1D1F;
+	border: 1px #282B30 solid;
+	border-radius: 12px;
+}
+
+.country-fullname {
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.details {
+	display: flex;
+	gap: 50px;
+	margin: 25px 0;
+}
+
+.details-info {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	background-color: #282B30;
+	padding: 12px 20px;
+	border-radius: 12px;
+}
+
+.country-details {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.country-info {
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px #282B30 solid;
+	border-bottom: 1px #282B30 solid;
+	padding: 24px 20px;
+}
