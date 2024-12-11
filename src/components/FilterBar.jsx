@@ -1,9 +1,9 @@
 import '../styles/component_styles/FilterBar.css'
 
-export default function FilterBar() {
+export default function FilterBar({ filteredCountries, handleIndependentCheck, handleUnMemberCheck }) {
 	return (
 		<div className='filter-bar'>
-			<strong className='found-countries'>Found ... countries</strong>
+			<strong className='found-countries'>Found {filteredCountries.length} countries</strong>
 			<div className='filter-cont'>
 				<small className='filter-info'>Sort by</small>
 				<div className='dropdown-list'>Population</div>
@@ -23,12 +23,12 @@ export default function FilterBar() {
 				<small className='filter-info'>Status</small>
 				<div className='filter-cont'>
 					<label className='checkbox-label' htmlFor="united-nations">
-						<input className='real-checkbox' name='united-nations' id='united-nations' type="checkbox" />
+						<input className='real-checkbox' name='united-nations' id='united-nations' type="checkbox" onChange={handleUnMemberCheck} />
 						<span className='custom-checkbox'></span>
 						Member of the United Nations
 					</label>
 					<label className='checkbox-label' htmlFor="independents">
-						<input className='real-checkbox' name='independents' id='independents' type="checkbox" />
+						<input className='real-checkbox' name='independents' id='independents' type="checkbox" onChange={handleIndependentCheck} />
 						<span className='custom-checkbox'></span>
 						Independent
 					</label>

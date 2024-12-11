@@ -6,19 +6,24 @@ import CountryPage from './pages/CountryPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
-  const [countriesInfoList, getCountriesInfoList] = useState([]);
+  const [countriesInfoList, setCountriesInfoList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [countriesPerPage] = useState(15);
 
-  console.log(countriesInfoList);
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const repsonse = await fetch('https://restcountries.com/v3.1/all');
-        const data = await repsonse.json();
-        getCountriesInfoList(data);
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error)
+      const cashedData = localStorage.getItem('countriesData')
+      if (cashedData) {
+        setCountriesInfoList(JSON.parse(cashedData));
+      } else {
+        try {
+          const repsonse = await fetch('https://restcountries.com/v3.1/all');
+          const data = await repsonse.json();
+          setCountriesInfoList(data);
+          localStorage.setItem('countriesData', JSON.stringify(data));
+        } catch (error) {
+          console.error('Ошибка при загрузке данных:', error)
+        }
       }
     };
 
