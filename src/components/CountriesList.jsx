@@ -1,10 +1,21 @@
 import '../styles/component_styles/CountriesList.css'
+import { useState } from 'react'
+import Pagination from './Pagination';
 
-export default function CountriesList() {
+export default function CountriesList({ countriesInfoList, currentPage, countriesPerPage, currentCountry, paginate }) {
+	const [enumerationCountries, getEnumerationCountries] = useState([]);
+
 	return (
 		<div className='countries-list'>
 			<input className='search-input' type="text" placeholder='Search by Name, Region, Subregion' />
 			<table className='table'>
+				<colgroup>
+					<col style={{ width: '10%' }} />
+					<col style={{ width: '30%' }} />
+					<col style={{ width: '20%' }} />
+					<col style={{ width: '20%' }} />
+					<col style={{ width: '20%' }} />
+				</colgroup>
 				<thead className='table-title'>
 					<tr>
 						<th scope='col'><small>Flag</small></th>
@@ -15,29 +26,23 @@ export default function CountriesList() {
 					</tr>
 				</thead>
 				<tbody className='table-list'>
-					<tr>
-						<td>Flag</td>
-						<td>Китай</td>
-						<td>1,402,112,000</td>
-						<td>9,706,961</td>
-						<td>Азия</td>
-					</tr>
-					<tr>
-						<td>Flag</td>
-						<td>Китай</td>
-						<td>1,402,112,000</td>
-						<td>9,706,961</td>
-						<td>Азия</td>
-					</tr>
-					<tr>
-						<td>Flag</td>
-						<td>Китай</td>
-						<td>1,402,112,000</td>
-						<td>9,706,961</td>
-						<td>Азия</td>
-					</tr>
+					{currentCountry.map(country => (
+						<tr key={country.cca3}>
+							<td className='table-img'><img src={country.flags.svg} alt="" /></td>
+							<td>{country.name.common}</td>
+							<td>{country.population}</td>
+							<td>{country.area}</td>
+							<td>{country.region}</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
+			<Pagination
+				currentPage={currentPage}
+				countriesPerPage={countriesPerPage}
+				totalCountries={countriesInfoList}
+				paginate={paginate}
+			/>
 		</div>
 	)
 }

@@ -2,7 +2,7 @@ import '../styles/page_styles/HomePage.css'
 import FilterBar from '../components/FilterBar'
 import CountriesList from '../components/CountriesList'
 
-export default function HomePage() {
+export default function HomePage({ countriesInfoList, currentPage, countriesPerPage, currentCountry, paginate }) {
 	return (
 		<div className='home-page'>
 			<div className='logo-container'>
@@ -10,7 +10,13 @@ export default function HomePage() {
 			</div>
 			<div className='country-ranks'>
 				<FilterBar />
-				<CountriesList />
+				<CountriesList
+					countriesInfoList={countriesInfoList}
+					currentPage={currentPage}
+					countriesPerPage={countriesPerPage}
+					currentCountry={currentCountry}
+					paginate={paginate}
+				/>
 			</div>
 		</div>
 	)

@@ -39,3 +39,10 @@
 	border-bottom: 3px #282B30 solid;
 	padding-bottom: 15px;
 }
+
+.table-img img {
+	width: 60px;
+	height: 45px;
+	object-fit: cover;
+	border-radius: 6px;
+}

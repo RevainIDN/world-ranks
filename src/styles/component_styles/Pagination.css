@@ -1,0 +1,31 @@
+.pagination-cont {
+	width: 100%;
+}
+
+.pagination {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	width: 100%;
+}
+
+.page-item {
+	margin-bottom: 8px;
+}
+
+.page-item button {
+	color: #D2D5DA;
+	background-color: #282B30;
+	padding: 6px 12px;
+	border-radius: 4px;
+	text-decoration: none;
+}
+
+.page-item button:hover {
+	color: #6C727F;
+}
+
+.active {
+	border: 1px #4E80EE solid;
+	border-radius: 4px;
+}
