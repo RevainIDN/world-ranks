@@ -26,10 +26,10 @@ export default function CountriesList({ countriesInfoList, currentPage, countrie
 				<tbody className='table-list'>
 					{currentCountries.map(country => (
 						<tr key={country.cca3}>
-							<td className='table-img'><img src={country.flags.svg} alt="" /></td>
+							<td className='table-img'><img src={country.flags.svg} alt={`${country.name.common}`} /></td>
 							<td>{country.name.common}</td>
-							<td>{country.population}</td>
-							<td>{country.area}</td>
+							<td>{country.population.toLocaleString('en-US')}</td>
+							<td>{country.area.toLocaleString('en-US')}</td>
 							<td>{country.region}</td>
 						</tr>
 					))}

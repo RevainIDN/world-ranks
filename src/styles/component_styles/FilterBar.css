@@ -22,16 +22,24 @@
 	color: #D2D5DA;
 }
 
-.dropdown-list {
+.dropdown-btn {
 	position: relative;
 	cursor: pointer;
 	width: 90%;
-	padding: 6px 12px;
+	padding: 6px 16px;
+	text-align: start;
 	border: 2px #282B30 solid;
-	border-radius: 12px;
+	background-color: transparent;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
 }
 
-.dropdown-list::before {
+.dropdown-btn--border {
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+}
+
+.dropdown-btn::before {
 	content: '';
 	position: absolute;
 	right: 10px;
@@ -40,6 +48,28 @@
 	width: 24px;
 	height: 24px;
 	background: no-repeat url(Expand_down.svg);
+}
+
+.dropdown-list--visible {
+	display: flex !important;
+}
+
+.dropdown-list {
+	display: none;
+	flex-direction: column;
+	gap: 5px;
+	width: 90%;
+	padding: 6px 16px;
+	border: 2px #282B30 solid;
+	background-color: transparent;
+	border-top: none;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	transition: 1s;
+}
+
+.drowdow-item {
+	cursor: pointer;
 }
 
 .filter-list {
@@ -52,8 +82,12 @@
 .filter-item {
 	cursor: pointer;
 	padding: 6px 12px;
-	background-color: #282B30;
+	background-color: transparent;
 	border-radius: 12px;
+}
+
+.filter-item--active {
+	background-color: #282B30;
 }
 
 .checkbox-label {

@@ -8,18 +8,31 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 	const [isUnMember, setIsUnMember] = useState(false);
 	const [isIndependent, setIsIndependent] = useState(false);
 
-	const filteredCountries = countriesInfoList.filter((country) => {
-		const matchesUnMember = isUnMember ? country.unMember === true : true;
+	const [sortType, setSortType] = useState('population');
 
-		const matchesIndependent = isIndependent ? country.independent === true : true;
+	const handleSortChange = (type) => {
+		setSortType(type);
+	};
 
-		const matchesText =
-			country.name.common.toLowerCase().includes(filterText.toLowerCase()) ||
-			country.region.toLowerCase().includes(filterText.toLowerCase()) ||
-			(country.subregion && country.subregion.toLowerCase().includes(filterText.toLowerCase()))
+	const filteredCountries = [...countriesInfoList]
+		.filter((country) => {
+			const matchesUnMember = isUnMember ? country.unMember === true : true;
 
-		return (matchesUnMember && matchesIndependent && matchesText)
-	})
+			const matchesIndependent = isIndependent ? country.independent === true : true;
+
+			const matchesText =
+				country.name.common.toLowerCase().includes(filterText.toLowerCase()) ||
+				country.region.toLowerCase().includes(filterText.toLowerCase()) ||
+				(country.subregion && country.subregion.toLowerCase().includes(filterText.toLowerCase()))
+
+			return (matchesUnMember && matchesIndependent && matchesText)
+		})
+		.sort((a, b) => {
+			if (sortType === 'population') return b.population - a.population;
+			if (sortType === 'area') return b.area - a.area;
+			if (sortType === 'alphabet') return a.name.common.localeCompare(b.name.common);
+			return 0;
+		});
 
 	const handleInput = (event) => {
 		const value = event.target.value;
@@ -50,6 +63,7 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 					filteredCountries={filteredCountries}
 					handleIndependentCheck={handleIndependentCheck}
 					handleUnMemberCheck={handleUnMemberCheck}
+					handleSortChange={handleSortChange}
 				/>
 				<CountriesList
 					countriesInfoList={filteredCountries}
