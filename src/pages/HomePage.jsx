@@ -5,10 +5,18 @@ import CountriesList from '../components/CountriesList'
 
 export default function HomePage({ countriesInfoList, currentPage, countriesPerPage, currentCountry, paginate }) {
 	const [filterText, setFilterText] = useState('');
+	const [sortType, setSortType] = useState('population');
+	const [filterRegion, setFilterRegion] = useState([]);
 	const [isUnMember, setIsUnMember] = useState(false);
 	const [isIndependent, setIsIndependent] = useState(false);
 
-	const [sortType, setSortType] = useState('population');
+	const handleRegionChange = (region) => {
+		setFilterRegion((prev) =>
+			prev.includes(region)
+				? prev.filter((r) => r !== region) // Удаляем, если уже выбран
+				: [...prev, region] // Добавляем, если не выбран
+		);
+	}
 
 	const handleSortChange = (type) => {
 		setSortType(type);
@@ -20,12 +28,14 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 
 			const matchesIndependent = isIndependent ? country.independent === true : true;
 
+			const matchesRegion = filterRegion.length === 0 || filterRegion.includes(country.region);
+
 			const matchesText =
 				country.name.common.toLowerCase().includes(filterText.toLowerCase()) ||
 				country.region.toLowerCase().includes(filterText.toLowerCase()) ||
 				(country.subregion && country.subregion.toLowerCase().includes(filterText.toLowerCase()))
 
-			return (matchesUnMember && matchesIndependent && matchesText)
+			return (matchesUnMember && matchesIndependent && matchesText && matchesRegion)
 		})
 		.sort((a, b) => {
 			if (sortType === 'population') return b.population - a.population;
@@ -64,6 +74,8 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 					handleIndependentCheck={handleIndependentCheck}
 					handleUnMemberCheck={handleUnMemberCheck}
 					handleSortChange={handleSortChange}
+					handleRegionChange={handleRegionChange}
+					filterRegion={filterRegion}
 				/>
 				<CountriesList
 					countriesInfoList={filteredCountries}

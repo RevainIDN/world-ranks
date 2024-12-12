@@ -1,10 +1,14 @@
 import '../styles/component_styles/FilterBar.css'
 import { useEffect, useRef } from 'react'
 
-export default function FilterBar({ filteredCountries, handleIndependentCheck, handleUnMemberCheck, handleSortChange }) {
+export default function FilterBar({ filteredCountries, handleIndependentCheck, handleUnMemberCheck, handleSortChange, handleRegionChange, filterRegion }) {
 	const dropdownRef = useRef(null);
 	const buttonRef = useRef(null);
 	const listRef = useRef(null);
+
+	const handleRegion = (region) => {
+		handleRegionChange(region);
+	}
 
 	const handleSort = (type) => {
 		handleSortChange(type);
@@ -61,12 +65,12 @@ export default function FilterBar({ filteredCountries, handleIndependentCheck, h
 			<div className='filter-cont'>
 				<small className='filter-info'>Region</small>
 				<ul className='filter-list'>
-					<li className='filter-item filter-item--active'>Americas</li>
-					<li className='filter-item'>Antarctic</li>
-					<li className='filter-item'>Africa</li>
-					<li className='filter-item'>Asia</li>
-					<li className='filter-item'>Europe</li>
-					<li className='filter-item'>Oceania</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Americas') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Americas')}>Americas</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Antarctic') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Antarctic')}>Antarctic</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Africa') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Africa')}>Africa</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Asia') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Asia')}>Asia</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Europe') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Europe')}>Europe</li>
+					<li className={`filter-item ${filterRegion.find(region => region === 'Oceania') ? 'filter-item--active' : ''}`} onClick={() => handleRegion('Oceania')}>Oceania</li>
 				</ul>
 			</div>
 			<div className='filter-cont'>
