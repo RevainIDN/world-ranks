@@ -45,7 +45,9 @@ export default function App() {
         currentCountry={currentCountry}
         paginate={paginate}
       />} />
-      <Route path='/country' element={<CountryPage />} />
+      <Route path='/country/:countryName' element={<CountryPage
+        countriesInfoList={countriesInfoList}
+      />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   )

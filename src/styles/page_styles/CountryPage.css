@@ -1,4 +1,5 @@
 .country-page {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -11,6 +12,20 @@
 	background-color: #1B1D1F;
 	border: 1px #282B30 solid;
 	border-radius: 12px;
+}
+
+.country-flag {
+	position: absolute;
+	top: -50px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 300px;
+	height: 200px;
+	border-radius: 16px;
+}
+
+.country-name {
+	margin-top: 150px;
 }
 
 .country-fullname {
@@ -45,4 +60,33 @@
 	border-top: 1px #282B30 solid;
 	border-bottom: 1px #282B30 solid;
 	padding: 24px 20px;
+}
+
+.neighbouring-countries {
+	display: flex;
+	flex-direction: column;
+}
+
+.neighbouring-title {
+	margin-bottom: 25px;
+}
+
+.neighbour-list {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	flex-wrap: wrap;
+	padding: 0;
+}
+
+.neighbour-img {
+	width: 100px;
+	height: 70px;
+	object-fit: cover;
+	border-radius: 6px;
+	margin-bottom: 5px;
+}
+
+.neighbour-name {
+	text-align: center;
 }

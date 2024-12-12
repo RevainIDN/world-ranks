@@ -10,17 +10,17 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 	const [isUnMember, setIsUnMember] = useState(false);
 	const [isIndependent, setIsIndependent] = useState(false);
 
-	const handleRegionChange = (region) => {
-		setFilterRegion((prev) =>
-			prev.includes(region)
-				? prev.filter((r) => r !== region) // Удаляем, если уже выбран
-				: [...prev, region] // Добавляем, если не выбран
-		);
-	}
-
 	const handleSortChange = (type) => {
 		setSortType(type);
 	};
+
+	const handleRegionChange = (region) => {
+		setFilterRegion((prev) =>
+			prev.includes(region)
+				? prev.filter((r) => r !== region)
+				: [...prev, region]
+		);
+	}
 
 	const filteredCountries = [...countriesInfoList]
 		.filter((country) => {
@@ -57,8 +57,6 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 		setIsIndependent(event.target.checked);
 	}
 
-	console.log(isUnMember, isIndependent)
-
 	const indexOfLastCountry = currentPage * countriesPerPage;
 	const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
 	const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
@@ -78,7 +76,7 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 					filterRegion={filterRegion}
 				/>
 				<CountriesList
-					countriesInfoList={filteredCountries}
+					filteredCountries={filteredCountries}
 					currentPage={currentPage}
 					countriesPerPage={countriesPerPage}
 					currentCountry={currentCountry}

@@ -1,8 +1,14 @@
 import '../styles/component_styles/CountriesList.css'
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 
-export default function CountriesList({ countriesInfoList, currentPage, countriesPerPage, currentCountries, paginate, handleInput }) {
+export default function CountriesList({ filteredCountries, currentPage, countriesPerPage, currentCountries, paginate, handleInput }) {
+	const navigate = useNavigate();
+
+	const handleCountryClick = (country) => {
+		navigate(`/country/${country.name.common}`, { state: { country } });
+	};
+
 	return (
 		<div className='countries-list'>
 			<input className='search-input' type="text" placeholder='Search by Name, Region, Subregion' onChange={handleInput} />
@@ -25,12 +31,12 @@ export default function CountriesList({ countriesInfoList, currentPage, countrie
 				</thead>
 				<tbody className='table-list'>
 					{currentCountries.map(country => (
-						<tr key={country.cca3}>
-							<td className='table-img'><img src={country.flags.svg} alt={`${country.name.common}`} /></td>
-							<td>{country.name.common}</td>
-							<td>{country.population.toLocaleString('en-US')}</td>
-							<td>{country.area.toLocaleString('en-US')}</td>
-							<td>{country.region}</td>
+						<tr className='table-column' key={country.cca3}>
+							<td className='table-line table-img' onClick={() => handleCountryClick(country)}><img src={country.flags.svg} alt={`${country.name.common}`} /></td>
+							<td className='table-line table-country' onClick={() => handleCountryClick(country)}>{country.name.common}</td>
+							<td className='table-line'>{country.population.toLocaleString('en-US')}</td>
+							<td className='table-line'>{country.area.toLocaleString('en-US')}</td>
+							<td className='table-line'>{country.region}</td>
 						</tr>
 					))}
 				</tbody>
@@ -38,7 +44,7 @@ export default function CountriesList({ countriesInfoList, currentPage, countrie
 			<Pagination
 				currentPage={currentPage}
 				countriesPerPage={countriesPerPage}
-				totalCountries={countriesInfoList}
+				totalCountries={filteredCountries}
 				paginate={paginate}
 			/>
 		</div>
