@@ -7,43 +7,37 @@ import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
   const [countriesInfoList, setCountriesInfoList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [countriesPerPage] = useState(15);
 
   useEffect(() => {
     const fetchData = async () => {
-      const cashedData = localStorage.getItem('countriesData')
-      if (cashedData) {
-        setCountriesInfoList(JSON.parse(cashedData));
-      } else {
-        try {
-          const repsonse = await fetch('https://restcountries.com/v3.1/all');
-          const data = await repsonse.json();
-          setCountriesInfoList(data);
-          localStorage.setItem('countriesData', JSON.stringify(data));
-        } catch (error) {
-          console.error('Ошибка при загрузке данных:', error)
+      try {
+        const cachedData = localStorage.getItem('countriesData')
+        if (cachedData) {
+          setCountriesInfoList(JSON.parse(cachedData));
+        } else {
+          try {
+            const response = await fetch('https://restcountries.com/v3.1/all');
+            const data = await response.json();
+            setCountriesInfoList(data);
+            localStorage.setItem('countriesData', JSON.stringify(data));
+          } catch (error) {
+            console.error('Ошибка при загрузке данных:', error)
+          }
         }
+      } catch (error) {
+        console.error('Error reading data from localStorage:', error);
       }
     };
 
     fetchData();
   }, []);
 
-  const lastCountryIndex = currentPage * countriesPerPage;
-  const firstCountryIndex = lastCountryIndex - countriesPerPage;
-  const currentCountry = countriesInfoList.slice(firstCountryIndex, lastCountryIndex);
-
-  const paginate = pageNumber => setCurrentPage(pageNumber)
-
   return (
     <Routes>
       <Route path='/' element={<HomePage
         countriesInfoList={countriesInfoList}
-        currentPage={currentPage}
         countriesPerPage={countriesPerPage}
-        currentCountry={currentCountry}
-        paginate={paginate}
       />} />
       <Route path='/country/:countryName' element={<CountryPage
         countriesInfoList={countriesInfoList}

@@ -1,3 +1,7 @@
+.logo {
+	cursor: pointer;
+}
+
 .country-page {
 	position: relative;
 	display: flex;
@@ -62,6 +66,10 @@
 	padding: 24px 20px;
 }
 
+.area-title sup {
+	font-size: 0.5em;
+}
+
 .neighbouring-countries {
 	display: flex;
 	flex-direction: column;
@@ -80,6 +88,7 @@
 }
 
 .neighbour-img {
+	cursor: pointer;
 	width: 100px;
 	height: 70px;
 	object-fit: cover;

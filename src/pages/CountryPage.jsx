@@ -1,5 +1,5 @@
 import '../styles/page_styles/CountryPage.css'
-import { useParams, useLocation } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 
 export default function CountryPage({ countriesInfoList }) {
 	const { countryName } = useParams();
@@ -12,11 +12,17 @@ export default function CountryPage({ countriesInfoList }) {
 		return <p>Country data not found!</p>;
 	}
 
+	const navigate = useNavigate();
+	const home = useNavigate();
+	const handleCountryClick = (country) => {
+		navigate(`/country/${country.name.common}`, { state: { country } });
+	};
+
 	return (
 		<>
 			<div className='home-page'>
 				<div className='logo-container'>
-					<img className='logo' src="/public/Logo.svg" alt="World Ranks" />
+					<img className='logo' src="/public/Logo.svg" alt="World Ranks" onClick={() => home('/')} />
 				</div>
 				<div className='country-page'>
 					<img className='country-flag' src={`${countryData.flags.svg}`} alt={countryData.name.common} />
@@ -27,7 +33,7 @@ export default function CountryPage({ countriesInfoList }) {
 							<li className='population-title'>Population</li>
 							<li className='population-count'>{countryData.population.toLocaleString('en-US')}</li>
 						</ul>
-						<ul className='details-info area-info'>
+						<ul className='details-info'>
 							<li className='area-title'>Area(km<sup>2</sup>)</li>
 							<li className='area-count'>{countryData.area.toLocaleString('en-US')}</li>
 						</ul>
@@ -83,7 +89,7 @@ export default function CountryPage({ countriesInfoList }) {
 										{countriesInfoList.map((countryNeighbor) => {
 											if (countryCode.includes(countryNeighbor.cca3)) {
 												return <ul className='neighbour-item' key={countryNeighbor.cca3}>
-													<li><img className='neighbour-img' src={countryNeighbor.flags.svg} alt={countryNeighbor.name.common} /></li>
+													<li><img className='neighbour-img' src={countryNeighbor.flags.svg} alt={countryNeighbor.name.common} onClick={() => handleCountryClick(countryNeighbor)} /></li>
 													<li><p className='neighbour-name'>{countryNeighbor.name.common}</p></li>
 												</ul>
 											}

@@ -2,7 +2,7 @@ import '../styles/component_styles/CountriesList.css'
 import { useNavigate } from 'react-router-dom';
 import Pagination from './Pagination';
 
-export default function CountriesList({ filteredCountries, currentPage, countriesPerPage, currentCountries, paginate, handleInput }) {
+export default function CountriesList({ filteredCountries, currentPage, countriesPerPage, currentCountry, paginate, handleInput }) {
 	const navigate = useNavigate();
 
 	const handleCountryClick = (country) => {
@@ -30,7 +30,7 @@ export default function CountriesList({ filteredCountries, currentPage, countrie
 					</tr>
 				</thead>
 				<tbody className='table-list'>
-					{currentCountries.map(country => (
+					{currentCountry.map(country => (
 						<tr className='table-column' key={country.cca3}>
 							<td className='table-line table-img' onClick={() => handleCountryClick(country)}><img src={country.flags.svg} alt={`${country.name.common}`} /></td>
 							<td className='table-line table-country' onClick={() => handleCountryClick(country)}>{country.name.common}</td>

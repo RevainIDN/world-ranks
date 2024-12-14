@@ -3,7 +3,8 @@ import { useState } from 'react'
 import FilterBar from '../components/FilterBar'
 import CountriesList from '../components/CountriesList'
 
-export default function HomePage({ countriesInfoList, currentPage, countriesPerPage, currentCountry, paginate }) {
+export default function HomePage({ countriesInfoList, countriesPerPage }) {
+	const [currentPage, setCurrentPage] = useState(1);
 	const [filterText, setFilterText] = useState('');
 	const [sortType, setSortType] = useState('population');
 	const [filterRegion, setFilterRegion] = useState([]);
@@ -57,9 +58,11 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 		setIsIndependent(event.target.checked);
 	}
 
-	const indexOfLastCountry = currentPage * countriesPerPage;
-	const indexOfFirstCountry = indexOfLastCountry - countriesPerPage;
-	const currentCountries = filteredCountries.slice(indexOfFirstCountry, indexOfLastCountry);
+	const lastCountryIndex = currentPage * countriesPerPage;
+	const firstCountryIndex = lastCountryIndex - countriesPerPage;
+	const currentCountry = filteredCountries.slice(firstCountryIndex, lastCountryIndex);
+
+	const paginate = pageNumber => setCurrentPage(pageNumber)
 
 	return (
 		<div className='home-page'>
@@ -82,7 +85,6 @@ export default function HomePage({ countriesInfoList, currentPage, countriesPerP
 					currentCountry={currentCountry}
 					paginate={paginate}
 					handleInput={handleInput}
-					currentCountries={currentCountries}
 				/>
 			</div>
 		</div>
