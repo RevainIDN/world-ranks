@@ -67,7 +67,7 @@ export default function HomePage({ countriesInfoList, countriesPerPage }) {
 	return (
 		<div className='home-page'>
 			<div className='logo-container'>
-				<img className='logo' src="/public/Logo.svg" alt="World Ranks" />
+				<img className='logo' src="Logo.svg" alt="World Ranks" />
 			</div>
 			<div className='country-ranks'>
 				<FilterBar

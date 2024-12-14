@@ -1,9 +1,9 @@
 {
   "name": "world-ranks",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
-  "homepage": "https://RevainIDN.github.io/",
+  "homepage": "https://RevainIDN.github.io/world-ranks",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
