@@ -34,17 +34,15 @@ export default function App() {
   }, []);
 
   return (
-    <BrowserRouter basename='/world-ranks'>
-      <Routes>
-        <Route path='/' element={<HomePage
-          countriesInfoList={countriesInfoList}
-          countriesPerPage={countriesPerPage}
-        />} />
-        <Route path='/country/:countryName' element={<CountryPage
-          countriesInfoList={countriesInfoList}
-        />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path='/' element={<HomePage
+        countriesInfoList={countriesInfoList}
+        countriesPerPage={countriesPerPage}
+      />} />
+      <Route path='/country/:countryName' element={<CountryPage
+        countriesInfoList={countriesInfoList}
+      />} />
+      <Route path='*' element={<NotFoundPage />} />
+    </Routes>
   )
 }
