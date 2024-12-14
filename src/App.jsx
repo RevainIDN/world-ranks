@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import './styles/App.css'
 import HomePage from './pages/HomePage'
@@ -34,15 +34,17 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route path='/' element={<HomePage
-        countriesInfoList={countriesInfoList}
-        countriesPerPage={countriesPerPage}
-      />} />
-      <Route path='/country/:countryName' element={<CountryPage
-        countriesInfoList={countriesInfoList}
-      />} />
-      <Route path='*' element={<NotFoundPage />} />
-    </Routes>
+    <BrowserRouter basename='/world-ranks'>
+      <Routes>
+        <Route path='/' element={<HomePage
+          countriesInfoList={countriesInfoList}
+          countriesPerPage={countriesPerPage}
+        />} />
+        <Route path='/country/:countryName' element={<CountryPage
+          countriesInfoList={countriesInfoList}
+        />} />
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
