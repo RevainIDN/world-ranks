@@ -6,7 +6,7 @@ import CountriesList from '../components/CountriesList'
 export default function HomePage({ countriesInfoList, countriesPerPage }) {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [filterText, setFilterText] = useState('');
-	const [sortType, setSortType] = useState('population');
+	const [sortType, setSortType] = useState('Population');
 	const [filterRegion, setFilterRegion] = useState([]);
 	const [isUnMember, setIsUnMember] = useState(false);
 	const [isIndependent, setIsIndependent] = useState(false);
@@ -39,9 +39,9 @@ export default function HomePage({ countriesInfoList, countriesPerPage }) {
 			return (matchesUnMember && matchesIndependent && matchesText && matchesRegion)
 		})
 		.sort((a, b) => {
-			if (sortType === 'population') return b.population - a.population;
-			if (sortType === 'area') return b.area - a.area;
-			if (sortType === 'alphabet') return a.name.common.localeCompare(b.name.common);
+			if (sortType === 'Population') return b.population - a.population;
+			if (sortType === 'Area') return b.area - a.area;
+			if (sortType === 'Alphabet') return a.name.common.localeCompare(b.name.common);
 			return 0;
 		});
 
@@ -77,6 +77,7 @@ export default function HomePage({ countriesInfoList, countriesPerPage }) {
 					handleSortChange={handleSortChange}
 					handleRegionChange={handleRegionChange}
 					filterRegion={filterRegion}
+					sortType={sortType}
 				/>
 				<CountriesList
 					filteredCountries={filteredCountries}

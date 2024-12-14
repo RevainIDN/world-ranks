@@ -1,7 +1,7 @@
 import '../styles/component_styles/FilterBar.css'
 import { useEffect, useRef } from 'react'
 
-export default function FilterBar({ filteredCountries, handleIndependentCheck, handleUnMemberCheck, handleSortChange, handleRegionChange, filterRegion }) {
+export default function FilterBar({ filteredCountries, handleIndependentCheck, handleUnMemberCheck, handleSortChange, handleRegionChange, filterRegion, sortType }) {
 	const dropdownRef = useRef(null);
 	const buttonRef = useRef(null);
 	const listRef = useRef(null);
@@ -55,11 +55,11 @@ export default function FilterBar({ filteredCountries, handleIndependentCheck, h
 			<strong className='found-countries'>Found {filteredCountries.length} countries</strong>
 			<div ref={dropdownRef} className='filter-cont'>
 				<small className='filter-info'>Sort by</small>
-				<button ref={buttonRef} className='dropdown-btn'>Population</button>
+				<button ref={buttonRef} className='dropdown-btn'>{sortType}</button>
 				<ul ref={listRef} className='dropdown-list'>
-					<li className='drowdow-item' onClick={() => handleSort('population')}>Population</li>
-					<li className='drowdow-item' onClick={() => handleSort('area')}>Area</li>
-					<li className='drowdow-item' onClick={() => handleSort('alphabet')}>Alphabetical order</li>
+					<li className='drowdow-item' onClick={() => handleSort('Population')}>Population</li>
+					<li className='drowdow-item' onClick={() => handleSort('Area')}>Area</li>
+					<li className='drowdow-item' onClick={() => handleSort('Alphabet')}>Alphabetical order</li>
 				</ul>
 			</div>
 			<div className='filter-cont'>
