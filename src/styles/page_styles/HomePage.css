@@ -12,9 +12,26 @@
 
 .country-ranks {
 	display: flex;
+	gap: 5px;
 	font-size: 1rem;
 	padding: 30px 40px;
 	background-color: #1B1D1F;
 	border: 1px #282B30 solid;
 	border-radius: 12px;
+}
+
+
+
+
+@media (max-width: 780px) {
+	.country-ranks {
+		flex-direction: column;
+		padding: 20px 12px;
+	}
+}
+
+@media (max-width: 400px) {
+	.country-ranks {
+		margin-top: 20px;
+	}
 }

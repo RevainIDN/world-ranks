@@ -7,3 +7,23 @@
 body {
   background: top / contain no-repeat url(/hero-image-wr.jpg);
 }
+
+
+
+
+
+@media (max-width: 780px) {
+  #root {
+    padding: 0.5rem;
+  }
+
+  body {
+    background: top / 100% 200px no-repeat url(/hero-image-wr.jpg);
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    background: top / 300% 200px no-repeat url(/hero-image-wr.jpg);
+  }
+}

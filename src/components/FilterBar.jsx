@@ -2,6 +2,7 @@ import '../styles/component_styles/FilterBar.css'
 import { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType, toggleUnMember, toggleIndependent, setFilterRegion } from '../store/filtersSlice'
+import { setCurrentPage } from '../store/paginationSlice'
 
 export default function FilterBar() {
 	const dispatch = useDispatch();
@@ -12,20 +13,23 @@ export default function FilterBar() {
 	const buttonRef = useRef(null);
 	const listRef = useRef(null);
 
-	const handleRegionChange = (region) => {
-		dispatch(setFilterRegion(region));
-	};
-
 	const handleSortChange = (type) => {
 		dispatch(setSortType(type));
 	};
 
+	const handleRegionChange = (region) => {
+		dispatch(setFilterRegion(region));
+		dispatch(setCurrentPage(1))
+	};
+
 	const handleUnMemberCheck = (event) => {
 		dispatch(toggleUnMember(event.target.checked));
+		dispatch(setCurrentPage(1))
 	}
 
 	const handleIndependentCheck = (event) => {
 		dispatch(toggleIndependent(event.target.checked));
+		dispatch(setCurrentPage(1))
 	}
 
 	const handleClick = () => {
