@@ -1,9 +1,24 @@
 import '../styles/component_styles/Pagination.css'
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentPage, setCurrentCountry } from '../store/paginationSlice';
 
-export default function Pagination({ currentPage, countriesPerPage, totalCountries, paginate }) {
+export default function Pagination() {
+	const dispatch = useDispatch();
+	const { filteredCountries } = useSelector(state => state.countries);
+	const { currentPage } = useSelector(state => state.pagination)
 	const pageNumbers = [];
+	const countriesPerPage = 15;
+	const paginate = pageNumber => dispatch(setCurrentPage(pageNumber))
 
-	for (let i = 1; i <= Math.ceil(totalCountries.length / countriesPerPage); i++) {
+	useEffect(() => {
+		const lastCountryIndex = currentPage * countriesPerPage;
+		const firstCountryIndex = lastCountryIndex - countriesPerPage;
+		dispatch(setCurrentCountry(filteredCountries.slice(firstCountryIndex, lastCountryIndex)))
+	}, [filteredCountries, currentPage, dispatch])
+
+
+	for (let i = 1; i <= Math.ceil(filteredCountries.length / countriesPerPage); i++) {
 		pageNumbers.push(i);
 	}
 

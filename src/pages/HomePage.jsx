@@ -1,92 +1,46 @@
 import '../styles/page_styles/HomePage.css'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFilteredCountries } from '../store/countriesSlice'
 import FilterBar from '../components/FilterBar'
 import CountriesList from '../components/CountriesList'
 
-export default function HomePage({ countriesInfoList, countriesPerPage }) {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [filterText, setFilterText] = useState('');
-	const [sortType, setSortType] = useState('Population');
-	const [filterRegion, setFilterRegion] = useState([]);
-	const [isUnMember, setIsUnMember] = useState(false);
-	const [isIndependent, setIsIndependent] = useState(false);
+export default function HomePage() {
+	const dispatch = useDispatch();
+	const { countriesInfoList } = useSelector(state => state.countries);
+	const { filterText, sortType, filterRegion, isUnMember, isIndependent } = useSelector(state => state.filters);
 
-	const handleSortChange = (type) => {
-		setSortType(type);
-	};
+	useEffect(() => {
+		const filtered = [...countriesInfoList]
+			.filter((country) => {
+				const matchesUnMember = isUnMember ? country.unMember === true : true;
+				const matchesIndependent = isIndependent ? country.independent === true : true;
+				const matchesRegion = filterRegion.length === 0 || filterRegion.includes(country.region);
+				const matchesText =
+					country.name.common.toLowerCase().includes(filterText.toLowerCase()) ||
+					country.region.toLowerCase().includes(filterText.toLowerCase()) ||
+					(country.subregion && country.subregion.toLowerCase().includes(filterText.toLowerCase()));
 
-	const handleRegionChange = (region) => {
-		setFilterRegion((prev) =>
-			prev.includes(region)
-				? prev.filter((r) => r !== region)
-				: [...prev, region]
-		);
-	}
+				return matchesUnMember && matchesIndependent && matchesText && matchesRegion;
+			})
+			.sort((a, b) => {
+				if (sortType === "Population") return b.population - a.population;
+				if (sortType === "Area") return b.area - a.area;
+				if (sortType === "Alphabet") return a.name.common.localeCompare(b.name.common);
+				return 0;
+			});
 
-	const filteredCountries = [...countriesInfoList]
-		.filter((country) => {
-			const matchesUnMember = isUnMember ? country.unMember === true : true;
-
-			const matchesIndependent = isIndependent ? country.independent === true : true;
-
-			const matchesRegion = filterRegion.length === 0 || filterRegion.includes(country.region);
-
-			const matchesText =
-				country.name.common.toLowerCase().includes(filterText.toLowerCase()) ||
-				country.region.toLowerCase().includes(filterText.toLowerCase()) ||
-				(country.subregion && country.subregion.toLowerCase().includes(filterText.toLowerCase()))
-
-			return (matchesUnMember && matchesIndependent && matchesText && matchesRegion)
-		})
-		.sort((a, b) => {
-			if (sortType === 'Population') return b.population - a.population;
-			if (sortType === 'Area') return b.area - a.area;
-			if (sortType === 'Alphabet') return a.name.common.localeCompare(b.name.common);
-			return 0;
-		});
-
-	const handleInput = (event) => {
-		const value = event.target.value;
-		setFilterText(value);
-	}
-
-	const handleUnMemberCheck = (event) => {
-		setIsUnMember(event.target.checked);
-	}
-
-	const handleIndependentCheck = (event) => {
-		setIsIndependent(event.target.checked);
-	}
-
-	const lastCountryIndex = currentPage * countriesPerPage;
-	const firstCountryIndex = lastCountryIndex - countriesPerPage;
-	const currentCountry = filteredCountries.slice(firstCountryIndex, lastCountryIndex);
-
-	const paginate = pageNumber => setCurrentPage(pageNumber)
+		dispatch(setFilteredCountries(filtered));
+	}, [countriesInfoList, filterText, sortType, filterRegion, isUnMember, isIndependent, dispatch]);
 
 	return (
 		<div className='home-page'>
 			<div className='logo-container'>
-				<img className='logo' src="Logo.svg" alt="World Ranks" />
+				<img className='logo' src="/world-ranks/Logo.svg" alt="World Ranks" />
 			</div>
 			<div className='country-ranks'>
-				<FilterBar
-					filteredCountries={filteredCountries}
-					handleIndependentCheck={handleIndependentCheck}
-					handleUnMemberCheck={handleUnMemberCheck}
-					handleSortChange={handleSortChange}
-					handleRegionChange={handleRegionChange}
-					filterRegion={filterRegion}
-					sortType={sortType}
-				/>
-				<CountriesList
-					filteredCountries={filteredCountries}
-					currentPage={currentPage}
-					countriesPerPage={countriesPerPage}
-					currentCountry={currentCountry}
-					paginate={paginate}
-					handleInput={handleInput}
-				/>
+				<FilterBar />
+				<CountriesList />
 			</div>
 		</div>
 	)

@@ -1,13 +1,23 @@
 import '../styles/component_styles/CountriesList.css'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilterText } from '../store/filtersSlice';
 import Pagination from './Pagination';
 
-export default function CountriesList({ filteredCountries, currentPage, countriesPerPage, currentCountry, paginate, handleInput }) {
+export default function CountriesList() {
+	const dispatch = useDispatch();
+	const { currentCountry } = useSelector(state => state.pagination);
+
 	const navigate = useNavigate();
 
 	const handleCountryClick = (country) => {
 		navigate(`/country/${country.name.common}`, { state: { country } });
 	};
+
+	const handleInput = (event) => {
+		const value = event.target.value;
+		dispatch(setFilterText(value));
+	}
 
 	return (
 		<div className='countries-list'>
@@ -41,12 +51,7 @@ export default function CountriesList({ filteredCountries, currentPage, countrie
 					))}
 				</tbody>
 			</table>
-			<Pagination
-				currentPage={currentPage}
-				countriesPerPage={countriesPerPage}
-				totalCountries={filteredCountries}
-				paginate={paginate}
-			/>
+			<Pagination />
 		</div>
 	)
 }

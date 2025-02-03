@@ -1,11 +1,12 @@
 import '../styles/page_styles/CountryPage.css'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux';
 
-export default function CountryPage({ countriesInfoList }) {
+export default function CountryPage() {
+	const { countriesInfoList } = useSelector(state => state.countries);
 	const { countryName } = useParams();
 	const location = useLocation();
 	const countryData = location.state?.country;
-
 	const countryCode = countryData.borders;
 
 	if (!countryData) {
@@ -22,7 +23,7 @@ export default function CountryPage({ countriesInfoList }) {
 		<>
 			<div className='home-page'>
 				<div className='logo-container'>
-					<img className='logo' src="/public/Logo.svg" alt="World Ranks" onClick={() => home('/')} />
+					<img className='logo' src="/world-ranks/Logo.svg" alt="World Ranks" onClick={() => home('/')} />
 				</div>
 				<div className='country-page'>
 					<img className='country-flag' src={`${countryData.flags.svg}`} alt={countryData.name.common} />
